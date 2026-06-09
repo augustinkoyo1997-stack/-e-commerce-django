@@ -1,0 +1,46 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h1>Produits</h1>
+<div class="products">
+    {% for product in products %}
+        <div>
+            <a href="{{ product.get_absolute_url }}">
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.price }} €</p>
+            </a>
+            <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Ajouter au panier</button>
+            </form>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Nos produits{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Bienvenue dans notre boutique</h1>
+
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        {% if product.is_new %}<div class="badge-new">🆕 Nouveau</div>{% endif %}
+        <img class="product-img" src="{{ product.image.url }}" alt="{{ product.name }}">
+        <div class="product-info">
+            <div class="product-title">{{ product.name }}</div>
+            <div class="supplier">{{ product.supplier }}</div>
+            <div class="price">{{ product.price }} CFA</div>
+            <div class="rating">★★★★☆ {{ product.rating }}</div>
+            <button class="add-cart" data-id="{{ product.id }}">Ajouter au panier</button>
+        </div>
+    </div>
+    {% empty %}
+    <p>Aucun produit disponible.</p>
+    {% endfor %}
+</div>
+{% endblock %}

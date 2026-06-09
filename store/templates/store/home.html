@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Accueil - DipitaShop{% endblock %}
+
+{% block content %}
+<!-- PAGE ACCUEIL -->
+<div id="page-home" class="page active-page">
+    <div class="hero-banner">
+        <div class="hero-text">
+            <h2><i class="fas fa-microchip"></i> High-tech & Authenticité</h2>
+            <p>Smartphones, PC, électroménager, verrerie, et artisanat béninois</p>
+        </div>
+        <div class="hero-badge">🇧🇯 Livraison Cotonou & toute la nation</div>
+    </div>
+
+    <div class="section-title"><i class="fas fa-star-of-life"></i> 🆕 Nouveaux produits</div>
+    <div id="new-products" class="product-grid"></div>
+
+    <div class="section-title"><i class="fas fa-chart-line"></i> 🔥 Top ventes du mois</div>
+    <div id="top-products" class="product-grid"></div>
+
+    <div class="section-title"><i class="fas fa-th-large"></i> 📦 Tous nos produits</div>
+    <div id="home-products" class="product-grid"></div>
+</div>
+
+<!-- Pages catégories avec sous-catégories -->
+<div id="page-Electronique" class="page">
+    <div class="hero-banner">
+        <div class="hero-text"><h2><i class="fas fa-microchip"></i> Composants & Gadgets</h2><p>Accessoires, câbles, écouteurs</p></div>
+        <div class="hero-badge">Qualité Pro</div>
+    </div>
+    <div id="subcat-electronique" class="subcat-bar"></div>
+    <div class="section-title">⚡ Électronique</div>
+    <div id="electronique-products" class="product-grid"></div>
+</div>
+
+<div id="page-Electromenager" class="page">
+    <div class="hero-banner">
+        <div class="hero-text"><h2><i class="fas fa-blender"></i> Petit & Gros électroménager</h2><p>Mixeurs, fers à repasser, micro-ondes</p></div>
+        <div class="hero-badge">Économies d'énergie</div>
+    </div>
+    <div id="subcat-electromenager" class="subcat-bar"></div>
+    <div class="section-title">🍳 Électroménager</div>
+    <div id="electromenager-products" class="product-grid"></div>
+</div>
+
+<div id="page-Smartphone" class="page">
+    <div class="hero-banner">
+        <div class="hero-text"><h2><i class="fas fa-mobile-alt"></i> Smartphones dernière génération</h2><p>iPhone, Samsung, Xiaomi, Tecno</p></div>
+        <div class="hero-badge">Garantie 1 an</div>
+    </div>
+    <div id="subcat-smartphone" class="subcat-bar"></div>
+    <div class="section-title">📱 Smartphones</div>
+    <div id="smartphone-products" class="product-grid"></div>
+</div>
+
+<div id="page-Verres" class="page">
+    <div class="hero-banner">
+        <div class="hero-text"><h2><i class="fas fa-wine-glass-alt"></i> Verres, Cristal & Vaisselle</h2><p>Arts de la table, verres à vin, coupes</p></div>
+        <div class="hero-badge">Élégance béninoise</div>
+    </div>
+    <div id="subcat-verres" class="subcat-bar"></div>
+    <div class="section-title">🥂 Verrerie fine</div>
+    <div id="verres-products" class="product-grid"></div>
+</div>
+
+<div id="page-PC" class="page">
+    <div class="hero-banner">
+        <div class="hero-text"><h2><i class="fas fa-laptop"></i> Ordinateurs portables & fixes</h2><p>Dell, HP, Lenovo, Asus</p></div>
+        <div class="hero-badge">Neuf & Reconditionné</div>
+    </div>
+    <div id="subcat-pc" class="subcat-bar"></div>
+    <div class="section-title">💻 PC & Accessoires</div>
+    <div id="pc-products" class="product-grid"></div>
+</div>
+
+<div id="page-Textile" class="page">
+    <div class="hero-banner">
+        <div class="hero-text"><h2><i class="fas fa-tshirt"></i> Tissus Wax & Bogolan</h2><p>Pagnes authentiques du Bénin</p></div>
+        <div class="hero-badge">Coton du pays</div>
+    </div>
+    <div id="subcat-textile" class="subcat-bar"></div>
+    <div class="section-title">🧵 Textile traditionnel</div>
+    <div id="textile-products" class="product-grid"></div>
+</div>
+
+<div id="page-Artisanat" class="page">
+    <div class="hero-banner">
+        <div class="hero-text"><h2><i class="fas fa-mask"></i> Sculptures, statuettes, calebasses</h2><p>Artistes de Porto-Novo</p></div>
+        <div class="hero-badge">Pièce unique</div>
+    </div>
+    <div id="subcat-artisanat" class="subcat-bar"></div>
+    <div class="section-title">🏺 Artisanat local</div>
+    <div id="artisanat-products" class="product-grid"></div>
+</div>
+{% endblock %}

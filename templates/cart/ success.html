@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Paiement réussi - DipitaShop</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container" style="text-align:center; padding:50px;">
+        <h1 style="color: #00863E;">✅ Merci pour votre commande !</h1>
+        <p>Votre paiement a été accepté. Vous recevrez un email de confirmation.</p>
+        <a href="/static" class="btn">Retour à l'accueil</a>
+    </div>
+    <script>
+        localStorage.removeItem('dipitaCartBenin');
+    </script>
+</body>
+</html>

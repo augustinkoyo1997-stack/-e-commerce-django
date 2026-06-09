@@ -1,0 +1,80 @@
+<script>
+    // Variables pour KKiaPay (déjà définies plus haut)
+    var KKIAY_PUBLIC_KEY = "{{ KKIAPAY_PUBLIC_KEY|default:'' }}";
+    var KKIAY_SANDBOX = {{ KKIAPAY_SANDBOX|yesno:"true,false" }};
+
+    // ========== PAIEMENT STRIPE ==========
+    document.getElementById('checkoutStripeBtn').addEventListener('click', function() {
+        // Récupérer les articles du panier depuis le HTML
+        const cartItems = [];
+        document.querySelectorAll('.cart-item').forEach(item => {
+            const id = item.dataset.id;
+            const qtySpan = item.querySelector('.qty-val');
+            const quantity = qtySpan ? parseInt(qtySpan.innerText) : 1;
+            cartItems.push({ id: parseInt(id), quantity: quantity });
+        });
+        if (cartItems.length === 0) {
+            alert("Votre panier est vide");
+            return;
+        }
+        fetch('/payments/create-checkout-session/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ cart: cartItems })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.url) window.location.href = data.url;
+            else alert("Erreur Stripe : " + (data.error || "inconnue"));
+        })
+        .catch(error => alert("Erreur de connexion"));
+    });
+
+    // ========== PAIEMENT KKIAPAY ==========
+    function loadKkiapayScript() {
+        return new Promise((resolve, reject) => {
+            if (typeof Kkiapay !== 'undefined') return resolve();
+            const script = document.createElement('script');
+            script.src = 'https://cdn.kkiapay.me/sdk/kkiapay.js';
+            script.onload = resolve;
+            script.onerror = () => reject(new Error("Impossible de charger KKiaPay"));
+            document.head.appendChild(script);
+        });
+    }
+
+    document.getElementById('checkoutMomoBtn').addEventListener('click', async function() {
+        const cartItems = [];
+        let total = 0;
+        document.querySelectorAll('.cart-item').forEach(item => {
+            const id = item.dataset.id;
+            const priceElem = item.querySelector('.cart-item-price');
+            const qtySpan = item.querySelector('.qty-val');
+            const price = parseInt(priceElem.innerText.replace(' CFA', '').replace(/\s/g, ''));
+            const quantity = qtySpan ? parseInt(qtySpan.innerText) : 1;
+            total += price * quantity;
+            cartItems.push({ id: parseInt(id), quantity: quantity });
+        });
+        if (cartItems.length === 0) {
+            alert("Votre panier est vide");
+            return;
+        }
+        try {
+            await loadKkiapayScript();
+            Kkiapay({
+                publicKey: KKIAY_PUBLIC_KEY,
+                sandbox: KKIAY_SANDBOX,
+                amount: total,
+                currency: 'XOF',
+                callback: (result) => {
+                    alert("✅ Paiement accepté !");
+                    // Vider le panier côté serveur ? Normalement le webhook s'en charge.
+                    // Pour simplifier, on redirige vers la page de succès
+                    window.location.href = '/payments/success/';
+                },
+                onClose: () => console.log('Fermé')
+            });
+        } catch (err) {
+            alert("Erreur de chargement du widget");
+        }
+    });
+</script>
